@@ -1,6 +1,7 @@
 package me.cuiyijie.articleanalysis.entity;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 /**
  * @author cyj976655@gmail.com
@@ -15,18 +16,25 @@ public class ReadRecord {
     public Long id;
 
 
-    @Column
-    private Long webId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "web_id",referencedColumnName = "id")
+    private ProductWeb productWeb;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "visitor_id",referencedColumnName = "id")
+    private Visitor visitor;
 
     @Column
-    private Long visitorId;
+    private OffsetDateTime createdAt;
 
     public ReadRecord() {
     }
 
-    public ReadRecord(Long webId, Long visitorId) {
-        this.webId = webId;
-        this.visitorId = visitorId;
+    public ReadRecord(ProductWeb productWeb, Visitor visitor) {
+        this.productWeb = productWeb;
+        this.visitor = visitor;
+        this.createdAt = OffsetDateTime.now();
     }
 
     public Long getId() {
@@ -37,28 +45,27 @@ public class ReadRecord {
         this.id = id;
     }
 
-    public Long getWebId() {
-        return webId;
+    public ProductWeb getProductWeb() {
+        return productWeb;
     }
 
-    public void setWebId(Long webId) {
-        this.webId = webId;
+    public void setProductWeb(ProductWeb productWeb) {
+        this.productWeb = productWeb;
     }
 
-    public Long getVisitorId() {
-        return visitorId;
+    public Visitor getVisitor() {
+        return visitor;
     }
 
-    public void setVisitorId(Long visitorId) {
-        this.visitorId = visitorId;
+    public void setVisitor(Visitor visitor) {
+        this.visitor = visitor;
     }
 
-    @Override
-    public String toString() {
-        return "ReadRecord{" +
-                "id=" + id +
-                ", webId=" + webId +
-                ", visitorId=" + visitorId +
-                '}';
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

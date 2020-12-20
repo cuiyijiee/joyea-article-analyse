@@ -3,7 +3,7 @@ package me.cuiyijie.articleanalysis.service;
 import me.cuiyijie.articleanalysis.dao.VisitorDao;
 import me.cuiyijie.articleanalysis.entity.Visitor;
 import me.cuiyijie.articleanalysis.entity.wx.WxBaseUserInfo;
-import me.cuiyijie.articleanalysis.vo.ReqUpdateVisitorInfo;
+import me.cuiyijie.articleanalysis.entity.vo.ReqUpdateVisitorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

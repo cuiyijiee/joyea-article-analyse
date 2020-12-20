@@ -1,4 +1,4 @@
-package me.cuiyijie.articleanalysis.vo;
+package me.cuiyijie.articleanalysis.entity.vo;
 
 /**
  * @author cyj976655@gmail.com
@@ -12,6 +12,16 @@ public class ReqUpdateVisitorInfo {
     private String name;
     private String mobileNumber;
 
+    public ReqUpdateVisitorInfo() {
+    }
+
+    public ReqUpdateVisitorInfo(Long visitorId, String companyName, String position, String name, String mobileNumber) {
+        this.visitorId = visitorId;
+        this.companyName = companyName;
+        this.position = position;
+        this.name = name;
+        this.mobileNumber = mobileNumber;
+    }
 
     public Long getVisitorId() {
         return visitorId;

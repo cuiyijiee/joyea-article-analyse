@@ -3,9 +3,9 @@
 <head th:include="layout :: htmlhead" th:with="title='即将阅读'">
 </head>
 <body>
-<a th:text="${articleUrl}">url</a>
+<a th:href="${articleUrl}">press to redirect to url</a>
 <script th:inline="javascript">
     var toRedirectUrl=[[${articleUrl}]];
-    window.location.replace(toRedirectUrl)
+    window.location.replace(toRedirectUrl);
 </script>
 </body>

@@ -10,6 +10,7 @@ module.exports = {
     devServer: {
         proxy: 'http://127.0.0.1:8080',
     },
+    publicPath:"/admin",
     chainWebpack: config => {
         config.resolve.alias
             .set('@', resolve('src'))

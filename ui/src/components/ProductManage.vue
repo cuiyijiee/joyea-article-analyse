@@ -12,9 +12,10 @@
                     <a-tooltip trigger="click">
                             <template #title>
                                 <div :ref="'qrcode_' + record.id">
-                                    <vue-qrcode :value="record.id.toString()"/>
+                                    <vue-qrcode :value="`https://scan.joyea.cn/preview?webId=${record.id}`"/>
                                 </div>
-                                <a-button style="width: 100%;margin-top: 20px" @click="handleDownloadQrcode(record)">下载</a-button>
+                                <a-button style="width: 100%;margin-top: 20px"
+                                          @click="handleDownloadQrcode(record)">下载</a-button>
                             </template>
                         <a-button>二维码</a-button>
                     </a-tooltip>
@@ -114,7 +115,7 @@ export default {
                 const childNodes = targetNode.childNodes;
                 if (childNodes && childNodes.length > 0) {
                     const imageNode = childNodes[0];
-                    downloadBase64Png(imageNode.getAttribute('src'),`qrcode_${record.id}_${record.productName}`);
+                    downloadBase64Png(imageNode.getAttribute('src'), `qrcode_${record.id}_${record.productName}_${record.webTitle}`);
                 }
             }
         },

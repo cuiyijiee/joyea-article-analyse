@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -58,10 +57,15 @@ public class WeChatController {
                 return String.format("redirect:/customError?error=%s", visitor.toString());
             default:
                 Long webId = Long.parseLong(state);
-                Optional<ProductWeb> productWeb = productWebService.findById(webId);
-                if (productWeb.isPresent()) {
-                    readRecordService.addReadRecord(webId, visitor.id);
-                    return String.format("redirect:/read?webUrl=%s", productWeb.get().webUrl);
+                Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
+                if (productWebOptional.isPresent()) {
+                    if (visitor.getCompanyName() == null) {
+                        return String.format("redirect:/updateInfo?webUrl=%s&visitorId=%s",
+                                productWebOptional.get().webUrl, visitor.getId());
+                    } else {
+                        readRecordService.addReadRecord(productWebOptional.get(), visitor);
+                        return String.format("redirect:%s", productWebOptional.get().webUrl);
+                    }
                 } else {
                     return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
                 }

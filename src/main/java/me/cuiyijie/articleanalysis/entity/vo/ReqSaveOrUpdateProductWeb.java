@@ -1,4 +1,4 @@
-package me.cuiyijie.articleanalysis.vo;
+package me.cuiyijie.articleanalysis.entity.vo;
 
 /**
  * @author cyj976655@gmail.com

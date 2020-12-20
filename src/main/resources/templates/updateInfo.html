@@ -41,14 +41,37 @@
     </form>
 </div>
 <script th:inline="javascript">
-    let articleId = [[${articleUrl}]];
+    let webUrl = [[${webUrl}]];
     let visitorId = [[${visitorId}]];
 
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            layer.msg(JSON.stringify(data.field));
+            console.log(JSON.stringify(data))
+            $.ajax({
+                type: "POST",
+                url: "api/visitor/updateInfo",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    visitorId: visitorId,
+                    companyName: data.field.company,
+                    position: data.field.position,
+                    name: data.field.name,
+                    mobileNumber: data.field.mobile,
+                }),
+                dataType: "json",
+                success: function (resp) {
+                    if(resp.data){
+                        window.location.replace(webUrl);
+                    }else{
+                        console.log("error: " + JSON.stringify(resp));
+                    }
+                },
+                error: function (error) {
+                    console.log("error: " + JSON.stringify(error));
+                }
+            });
             return false;
         });
     });
