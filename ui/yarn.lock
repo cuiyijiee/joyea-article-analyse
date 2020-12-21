@@ -5889,7 +5889,7 @@
   dependencies:
     "minimist" "^1.2.5"
 
-"moment@^2.27.0":
+"moment@^2.27.0", "moment@^2.29.1":
   "integrity" "sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M="
   "resolved" "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz?cache=0&sync_timestamp=1601983320283&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.29.1.tgz"
   "version" "2.29.1"

@@ -24,3 +24,7 @@ function downloadFile(url, name) {
     a.dispatchEvent(clickEvent);
 }
 
+import moment from "moment";
+export function dateFormat(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
+    return moment(new Date(dataStr)).format(pattern);
+}

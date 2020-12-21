@@ -33,3 +33,8 @@ export function updateProductWeb(id, webUrl, webTitle, productName, productType)
 export function deleteProductWeb(id) {
     return service.delete(`api/productWeb/delete?id=${id}`)
 }
+
+
+export function pageFindReadRecord(current,pageSize){
+    return service.get(`api/readRecord/find?current=${current}&pageSize=${pageSize}`)
+}
