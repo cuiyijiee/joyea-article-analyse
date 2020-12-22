@@ -31,8 +31,8 @@ public class ReadRecordController {
 
 
     @RequestMapping("/api/readRecord/all")
-    public List<ReadRecord> findAll() {
-        return readRecordService.findAll();
+    public CommonResp<ReadRecord> findAll() {
+        return CommonResp.success(readRecordService.findAll());
     }
 
     @RequestMapping("/api/readRecord/find")

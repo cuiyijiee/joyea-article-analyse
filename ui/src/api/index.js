@@ -38,3 +38,7 @@ export function deleteProductWeb(id) {
 export function pageFindReadRecord(current,pageSize){
     return service.get(`api/readRecord/find?current=${current}&pageSize=${pageSize}`)
 }
+
+export function findAllReadRecord(){
+    return service.get(`api/readRecord/all`)
+}
