@@ -60,8 +60,10 @@ public class WeChatController {
                 Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
                 if (productWebOptional.isPresent()) {
                     if (visitor.getCompanyName() == null) {
-                        return String.format("redirect:/updateInfo?webUrl=%s&visitorId=%s",
-                                productWebOptional.get().webUrl, visitor.getId());
+                        return String.format("redirect:/updateInfo?webUrl=%s&visitorId=%s&webId=%s",
+                                productWebOptional.get().webUrl,
+                                visitor.getId(),
+                                productWebOptional.get().id);
                     } else {
                         readRecordService.addReadRecord(productWebOptional.get(), visitor);
                         return String.format("redirect:%s", productWebOptional.get().webUrl);

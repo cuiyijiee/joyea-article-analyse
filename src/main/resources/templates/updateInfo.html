@@ -43,12 +43,18 @@
 <script th:inline="javascript">
     let webUrl = [[${webUrl}]];
     let visitorId = [[${visitorId}]];
+    let webId = [[${webId}]];
+
+    var left = sessionStorage.getItem("left");
+    if(left === 'true'){
+        window.close();
+    }
 
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            console.log(JSON.stringify(data))
+            //$.get(`updateInfoAndGo?visitorId=${visitorId}&webId=${webId}&companyName=${data.field.company}&position=${data.field.position}&name=${data.field.name}&mobileNumber=${data.field.mobile}&webUrl=${webUrl}`)
             $.ajax({
                 type: "POST",
                 url: "api/visitor/updateInfo",
@@ -62,9 +68,11 @@
                 }),
                 dataType: "json",
                 success: function (resp) {
-                    if(resp.data){
+                    if (resp.data) {
+                        $.get(`api/readRecord/add?visitorId=${visitorId}&webId=${webId}`);
+                        sessionStorage.setItem("left","true")
                         window.location.replace(webUrl);
-                    }else{
+                    } else {
                         console.log("error: " + JSON.stringify(resp));
                     }
                 },

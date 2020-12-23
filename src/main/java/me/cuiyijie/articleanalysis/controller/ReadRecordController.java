@@ -1,5 +1,6 @@
 package me.cuiyijie.articleanalysis.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import me.cuiyijie.articleanalysis.define.CommonResp;
 import me.cuiyijie.articleanalysis.define.PageUtil;
 import me.cuiyijie.articleanalysis.entity.ReadRecord;
@@ -29,6 +30,11 @@ public class ReadRecordController {
         return "";
     }
 
+    @RequestMapping("/api/readRecord/add")
+    public CommonResp<Boolean> addRecord(long visitorId, long webId) {
+        readRecordService.addRecordById(webId, visitorId);
+        return CommonResp.success(true);
+    }
 
     @RequestMapping("/api/readRecord/all")
     public CommonResp<ReadRecord> findAll() {

@@ -24,6 +24,10 @@ public class ReadRecordService {
     @Autowired
     private ReadRecordDao readRecordDao;
 
+    public void addRecordById(long webId, long visitorId) {
+        readRecordDao.addRecordIdById(webId, visitorId);
+    }
+
     public ReadRecord addReadRecord(ProductWeb productWeb, Visitor visitorId) {
         ReadRecord readRecord = new ReadRecord(productWeb, visitorId);
         return readRecordDao.save(readRecord);
