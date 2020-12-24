@@ -51,4 +51,8 @@ public class VisitorService {
             return false;
         }
     }
+
+    public Optional<Visitor> findById(long id){
+        return visitorDao.findById(id);
+    }
 }

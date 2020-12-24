@@ -1,6 +1,7 @@
 package me.cuiyijie.articleanalysis.controller;
 
 import me.cuiyijie.articleanalysis.define.CommonResp;
+import me.cuiyijie.articleanalysis.entity.Visitor;
 import me.cuiyijie.articleanalysis.service.ReadRecordService;
 import me.cuiyijie.articleanalysis.service.VisitorService;
 import me.cuiyijie.articleanalysis.entity.vo.ReqUpdateVisitorInfo;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * @author cyj976655@gmail.com
@@ -65,5 +68,12 @@ public class VisitorController {
     public CommonResp updateInfo(@RequestBody ReqUpdateVisitorInfo reqUpdateVisitorInfo) {
         visitorService.saveUserInfo(reqUpdateVisitorInfo);
         return CommonResp.success(true);
+    }
+
+    @ResponseBody
+    @RequestMapping("/api/visitor/infoComplete")
+    public CommonResp<Boolean> queryUserInfoComplete(@RequestParam long visitorId) {
+        Optional<Visitor> visitor = visitorService.findById(visitorId);
+        return CommonResp.success(visitor.isPresent() && visitor.get().getCompanyName() != null);
     }
 }

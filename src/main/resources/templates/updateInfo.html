@@ -45,10 +45,24 @@
     let visitorId = [[${visitorId}]];
     let webId = [[${webId}]];
 
-    var left = sessionStorage.getItem("left");
-    if(left === 'true'){
-        window.close();
-    }
+
+    window.addEventListener('pageshow', function () {
+        $.ajax({
+            type: "POST",
+            url: "/api/visitor/infoComplete?visitorId=" + visitorId,
+            contentType: "application/json; charset=utf-8",
+            data: null,
+            dataType: "json",
+            success: function (resp) {
+                if (resp.data) {
+                    WeixinJSBridge.call('closeWindow');
+                }
+            },
+            error: function (error) {
+                console.log("error: " + JSON.stringify(error));
+            }
+        });
+    });
 
     layui.use('form', function () {
         var form = layui.form;
@@ -70,7 +84,7 @@
                 success: function (resp) {
                     if (resp.data) {
                         $.get(`api/readRecord/add?visitorId=${visitorId}&webId=${webId}`);
-                        sessionStorage.setItem("left","true")
+                        sessionStorage.setItem("left", "true")
                         window.location.replace(webUrl);
                     } else {
                         console.log("error: " + JSON.stringify(resp));
