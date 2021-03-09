@@ -1,6 +1,7 @@
 package me.cuiyijie.articleanalysis.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -18,5 +19,10 @@ public class UserController {
     @RequestMapping("/login")
     public String login() {
         return "login";
+    }
+
+    @RequestMapping("/test")
+    public String test() {
+        return "test";
     }
 }

@@ -2,12 +2,11 @@ package me.cuiyijie.articleanalysis.controller;
 
 import me.cuiyijie.articleanalysis.dao.ProductWebDao;
 import me.cuiyijie.articleanalysis.define.CommonResp;
-import me.cuiyijie.articleanalysis.define.Constants;
 import me.cuiyijie.articleanalysis.define.PageUtil;
 import me.cuiyijie.articleanalysis.entity.ProductWeb;
+import me.cuiyijie.articleanalysis.entity.vo.ReqSaveOrUpdateProductWeb;
 import me.cuiyijie.articleanalysis.service.ProductWebService;
 import me.cuiyijie.articleanalysis.service.ReadRecordService;
-import me.cuiyijie.articleanalysis.entity.vo.ReqSaveOrUpdateProductWeb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Optional;
 
 /**
@@ -85,18 +82,17 @@ public class ProductWebController {
         return "read";
     }
 
-    @RequestMapping("preview")
-    public String preview(@RequestParam(defaultValue = "0") Long webId) throws UnsupportedEncodingException {
-        Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
-        if (productWebOptional.isPresent()) {
-            return String.format(
-                    "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=https://scan.joyea.cn/api/wechat/redirect&response_type=code&scope=snsapi_userinfo&state=%s#wechat_redirect",
-                    Constants.WeChatAppId,
-                    webId
-            );
-        } else {
-            return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
-        }
-    }
-
+//    @RequestMapping("preview")
+//    public String preview(@RequestParam(defaultValue = "0") Long webId) throws UnsupportedEncodingException {
+//        Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
+//        if (productWebOptional.isPresent()) {
+//            return String.format(
+//                    "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=https://scan.joyea.cn/api/wechat/redirect&response_type=code&scope=snsapi_userinfo&state=%s#wechat_redirect",
+//                    Constants.WeChatAppId,
+//                    webId
+//            );
+//        } else {
+//            return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
+//        }
+//    }
 }

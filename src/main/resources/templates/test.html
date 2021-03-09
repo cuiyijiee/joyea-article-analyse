@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="renderer" content="webkit"/>
+    <title>江苏仅一联合智造有限公司</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <link rel="stylesheet" href="/css/common.css"/>
+</head>
+<body>
+<div id="info_form">
+    <div style="margin: 30px 20px 30px;">
+        <div style="width: 100%; text-align: center;">
+            <img src="/img/logo.png">
+        </div>
+        <form method="POST" action="" class="form-horizontal" id="update-form">
+            <div style="margin-top: 30px;">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" name="companyNameField" id="companyNameField"
+                           placeholder="公司名称*">
+                    <label for="companyNameField">公司名称*</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="positionField" placeholder="您的职位*">
+                    <label for="positionField">您的职位*</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="nameField" placeholder="您的姓名*">
+                    <label for="nameField">您的姓名*</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="mobileNumberField" placeholder="联系方式">
+                    <label for="mobileNumberField">联系方式</label>
+                </div>
+            </div>
+            <div>
+                <div class="alert alert-danger alert-dismissible fade" role="alert" id="buttonAlert">
+                    msg
+                </div>
+            </div>
+            <div style="width: 100%; text-align: center;margin-top: 50px;">
+                <button type="button"
+                        style="border: 2px solid #eb7705; color: #eb7705"
+                        class="btn btn-outline-warning btn-lg">开始预览
+                </button>
+                <div style="margin-top: 30px;">
+                    <button style="color: #bbbbbb; outline:none; border:none;background-color:#ffffff;" type="reset"><u>重置填写栏</u>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+
+    function showAlert(msg) {
+        let alert = $("#buttonAlert");
+        alert.addClass('show');
+        alert.first().html(msg);
+    }
+
+    function recordVisit() {
+        $.get(`/api/readRecord/add?visitorId=${visitorId}&webId=${webId}`);
+    }
+
+    function updateInfo() {
+
+        let companyName = $("#companyNameField").val();
+        let position = $("#positionField").val();
+        let name = $("#nameField").val();
+        let mobileNumber = $("#mobileNumberField").val();
+        if (!companyName || companyName.trim().length === 0) {
+            showAlert("请输入公司名称!");
+            return false;
+        }
+        if (!position || position.trim().length === 0) {
+            showAlert("请输入职位!");
+            return false;
+        }
+        if (!name || name.trim().length === 0) {
+            showAlert("请输入姓名!");
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/api/visitor/updateInfo",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+                visitorId: visitorId,
+                companyName: companyName,
+                position: position,
+                name: name,
+                mobileNumber: mobileNumber,
+            }),
+            dataType: "json",
+            success: function (resp) {
+                if (resp.data) {
+
+                    recordVisit();
+
+                    infoForm.remove();
+                    //infoForm.css("visibility", "hidden");
+                    productIframe.attr("src", webUrl);
+                    productIframe.css("display", "inline");
+                } else {
+                    console.log("error: " + JSON.stringify(resp));
+                }
+            },
+            error: function (error) {
+                console.log("error: " + JSON.stringify(error));
+            }
+        });
+    }
+
+    function setWebId(webId) {
+        let url = location.pathname + '?webId=' + webId;
+        history.pushState({url: url, title: document.title}, document.title, url);
+    }
+</script>
+</body>
