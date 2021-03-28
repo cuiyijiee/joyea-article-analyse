@@ -73,6 +73,7 @@ public class ProductWebController {
     @DeleteMapping("api/productWeb/delete")
     public CommonResp delete(@RequestParam Long id) {
         productWebDao.deleteById(id);
+        readRecordService.deleteByWebId(id);
         return CommonResp.success(true);
     }
 

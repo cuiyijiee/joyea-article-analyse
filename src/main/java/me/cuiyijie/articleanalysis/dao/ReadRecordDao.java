@@ -21,4 +21,8 @@ public interface ReadRecordDao extends PagingAndSortingRepository<ReadRecord, Lo
     @Query(value = "INSERT into read_record(web_id,visitor_id) VALUES(?1,?2)", nativeQuery = true)
     public void addRecordIdById(long webId, long visitorId);
 
+    @Modifying
+    @Query(value = "DELETE FROM read_record where web_id = ?1", nativeQuery = true)
+    public void deleteByWebId(long webId);
+
 }

@@ -40,4 +40,8 @@ public class ReadRecordService {
     public List<ReadRecord> findAll() {
         return (List<ReadRecord>) readRecordDao.findAll(Sort.by("createdAt").descending());
     }
+
+    public void deleteByWebId(long webId){
+        readRecordDao.deleteByWebId(webId);
+    }
 }
