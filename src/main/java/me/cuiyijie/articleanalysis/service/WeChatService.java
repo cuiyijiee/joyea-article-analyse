@@ -1,10 +1,10 @@
 package me.cuiyijie.articleanalysis.service;
 
+import lombok.extern.slf4j.Slf4j;
 import me.cuiyijie.articleanalysis.define.Constants;
 import me.cuiyijie.articleanalysis.entity.wx.WxAccessToken;
 import me.cuiyijie.articleanalysis.entity.wx.WxBaseUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -16,6 +16,7 @@ import java.util.Map;
  * @author cyj976655@gmail.com
  * @date 2020/12/20 15:31
  */
+@Slf4j
 @Service
 public class WeChatService {
 
@@ -35,6 +36,7 @@ public class WeChatService {
         postData.put("code", code);
         postData.put("grant_type", "authorization_code");
         WxAccessToken accessToken = restTemplate.getForObject(GetAccessTokenUrl, WxAccessToken.class, postData);
+        log.info("【wechat】get access token: {}", accessToken);
         return accessToken;
     }
 
@@ -47,12 +49,12 @@ public class WeChatService {
         WxBaseUserInfo result = null;
         try {
             result = restTemplate.getForObject(GetUserInfoUrl, WxBaseUserInfo.class, params);
-            if (null == result || !result.valid()) {// tag9
-                System.out.println("getBaseUserInfo invalid: " + result);
+            log.info("【wechat】get base user info: {}", result);
+            if (null == result || !result.valid()) {
                 result = null;
             }
-        } catch (RestClientException e) {
-            System.out.println("getBaseUserInfo" + e);
+        } catch (RestClientException exception) {
+            log.error("【wechat】get base user info:", exception);
         }
         return result;
     }

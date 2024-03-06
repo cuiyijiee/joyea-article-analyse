@@ -119,6 +119,8 @@ public class WxBaseUserInfo extends WxError implements Serializable {
                 ", headImgUrl='" + headImgUrl + '\'' +
                 ", privilege=" + privilege +
                 ", unionId='" + unionId + '\'' +
+                ", errorMsg='" + getErrMsg() + '\'' +
+                ", errorCode='" + getErrCode() + '\'' +
                 '}';
     }
 }

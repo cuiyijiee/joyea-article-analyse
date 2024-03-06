@@ -1,5 +1,6 @@
 package me.cuiyijie.articleanalysis.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.cuiyijie.articleanalysis.define.Constants;
 import me.cuiyijie.articleanalysis.entity.ProductWeb;
 import me.cuiyijie.articleanalysis.entity.Visitor;
@@ -22,6 +23,7 @@ import java.util.Optional;
  * @author cyj976655@gmail.com
  * @date 2021/2/21 13:37
  */
+@Slf4j
 @Controller
 public class WeChatController {
 
@@ -44,7 +46,7 @@ public class WeChatController {
             if (productWebOptional.isPresent()) {
                 //构建微信授权信息，并跳转到当前网址，以便微信进行分享
                 return String.format(
-                        "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=https://scan.joyea.cn/preview?webId=%s&response_type=code&scope=snsapi_userinfo&state=%s#wechat_redirect",
+                        "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=https://scan.joyea.cn/preview?webId=%s&response_type=code&scope=snsapi_userinfo&state=%s&forcePopup=true#wechat_redirect",
                         Constants.WeChatAppId,
                         webIdOpt.get(),
                         webIdOpt.get()
@@ -55,17 +57,7 @@ public class WeChatController {
             }
         } else {
 
-            //通过微信授权获取到的CODE请求微信服务器获取到用户信息
-            WxAccessToken accessToken = weChatService.getAccessToken(code.get());
-            WxBaseUserInfo wxBaseUserInfo = weChatService.getBaseUserInfo(accessToken.getAccessToken(), accessToken.getOpenId());
-            if (wxBaseUserInfo == null) {
-                return String.format("redirect:/customError?error=%s", URLEncoder.encode("微信用户信息获取失败!", "UTF-8"));
-            }
-            Visitor visitor = visitorService.saveOrUpdateUserWxInfo(wxBaseUserInfo);
 
-            model.addAttribute("visitorId", visitor.getId());
-            //如果访客用户信息是null，则需要进行用户信息完善
-            model.addAttribute("needComplete", visitor.getCompanyName() == null);
 
             Long webId = Long.parseLong(state.orElse("-1"));
             Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
@@ -74,6 +66,22 @@ public class WeChatController {
                 return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
             } else {
                 model.addAttribute("productWeb", productWebOptional.get());
+
+                //通过微信授权获取到的CODE请求微信服务器获取到用户信息
+                WxAccessToken accessToken = weChatService.getAccessToken(code.get());
+                if(1 == accessToken.isSnapshotuser) {
+                    model.addAttribute("isSnapshotUser", true);
+                    return "preview";
+                }else{
+                    model.addAttribute("isSnapshotUser", false);
+                }
+                WxBaseUserInfo wxBaseUserInfo = weChatService.getBaseUserInfo(accessToken.getAccessToken(), accessToken.getOpenId());
+                if (wxBaseUserInfo == null) {
+                    return String.format("redirect:/customError?error=%s", URLEncoder.encode("微信用户信息获取失败!", "UTF-8"));
+                }
+                Visitor visitor = visitorService.saveOrUpdateUserWxInfo(wxBaseUserInfo);
+                model.addAttribute("visitorId", visitor.getId());
+
                 return "preview";
             }
         }

@@ -24,6 +24,9 @@ public class WxAccessToken extends WxError implements Serializable {
 
     public String scope;
 
+    @JsonProperty("is_snapshotuser")
+    public int isSnapshotuser;
+
 
     public String getAccessToken() {
         return accessToken;
@@ -73,6 +76,7 @@ public class WxAccessToken extends WxError implements Serializable {
                 ", refreshToken='" + refreshToken + '\'' +
                 ", openId='" + openId + '\'' +
                 ", scope='" + scope + '\'' +
+                ", is_snapshotuser='" + isSnapshotuser + '\'' +
                 '}';
     }
 }
