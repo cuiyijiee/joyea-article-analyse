@@ -56,9 +56,6 @@ public class WeChatController {
                 return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
             }
         } else {
-
-
-
             Long webId = Long.parseLong(state.orElse("-1"));
             Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
             if (!productWebOptional.isPresent()) {
@@ -69,7 +66,7 @@ public class WeChatController {
 
                 //通过微信授权获取到的CODE请求微信服务器获取到用户信息
                 WxAccessToken accessToken = weChatService.getAccessToken(code.get());
-                if(1 == accessToken.isSnapshotuser) {
+                if(1 == accessToken.getIsSnapshotuser()) {
                     model.addAttribute("isSnapshotUser", true);
                     return "preview";
                 }else{

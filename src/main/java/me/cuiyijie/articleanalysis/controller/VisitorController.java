@@ -37,14 +37,16 @@ public class VisitorController {
         return "updateInfo";
     }
 
+
     /**
-     * private Long visitorId;
-     * private String companyName;
-     * private String position;
-     * private String name;
-     * private String mobileNumber;
      *
      * @param webUrl
+     * @param visitorId
+     * @param webId
+     * @param companyName
+     * @param position
+     * @param name
+     * @param mobileNumber
      * @return
      */
     @RequestMapping("updateInfoAndGo")

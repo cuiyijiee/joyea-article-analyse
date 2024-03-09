@@ -1,5 +1,8 @@
 package me.cuiyijie.articleanalysis.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
@@ -7,14 +10,15 @@ import java.time.OffsetDateTime;
  * @author cyj976655@gmail.com
  * @date 2020/12/20 16:48
  */
+@Data
 @Entity
+@NoArgsConstructor
 @Table(name = "visitor")
 public class Visitor {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
-
+    private Long id;
     @Column
     private String wxOpenId;
     @Column
@@ -34,96 +38,11 @@ public class Visitor {
     @Column
     private OffsetDateTime updatedAt;
 
-
-    public Visitor() {
-    }
-
     public Visitor(String wxOpenId, String wxNickName, String wxHeadImage) {
         this.wxOpenId = wxOpenId;
         this.wxNickName = wxNickName;
         this.wxHeadImage = wxHeadImage;
         this.createdAt = OffsetDateTime.now();
-    }
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getWxOpenId() {
-        return wxOpenId;
-    }
-
-    public void setWxOpenId(String wxOpenId) {
-        this.wxOpenId = wxOpenId;
-    }
-
-    public String getWxNickName() {
-        return wxNickName;
-    }
-
-    public void setWxNickName(String wxNickName) {
-        this.wxNickName = wxNickName;
-    }
-
-    public String getWxHeadImage() {
-        return wxHeadImage;
-    }
-
-    public void setWxHeadImage(String wxHeadImage) {
-        this.wxHeadImage = wxHeadImage;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCompanyPosition() {
-        return companyPosition;
-    }
-
-    public void setCompanyPosition(String companyPosition) {
-        this.companyPosition = companyPosition;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getMobileNumber() {
-        return mobileNumber;
-    }
-
-    public void setMobileNumber(String mobileNumber) {
-        this.mobileNumber = mobileNumber;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     @Override

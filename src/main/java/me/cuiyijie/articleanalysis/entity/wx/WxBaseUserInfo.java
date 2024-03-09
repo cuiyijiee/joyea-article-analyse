@@ -1,6 +1,8 @@
 package me.cuiyijie.articleanalysis.entity.wx;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.List;
  * @author cyj976655@gmail.com
  * @date 2020/12/20 15:33
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class WxBaseUserInfo extends WxError implements Serializable {
 
     @JsonProperty("openid")
@@ -33,78 +37,6 @@ public class WxBaseUserInfo extends WxError implements Serializable {
 
     @JsonProperty("unionid")
     private String unionId;
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getHeadImgUrl() {
-        return headImgUrl;
-    }
-
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl;
-    }
-
-    public List<String> getPrivilege() {
-        return privilege;
-    }
-
-    public void setPrivilege(List<String> privilege) {
-        this.privilege = privilege;
-    }
-
-    public String getUnionId() {
-        return unionId;
-    }
-
-    public void setUnionId(String unionId) {
-        this.unionId = unionId;
-    }
 
 
     @Override

@@ -1,5 +1,9 @@
 package me.cuiyijie.articleanalysis.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.time.OffsetDateTime;
 
@@ -7,32 +11,34 @@ import java.time.OffsetDateTime;
  * @author cyj976655@gmail.com
  * @date 2020/12/19 16:35
  */
+@Data
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "product_web")
 public class ProductWeb {
 
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column
-    public String webUrl;
-    @Column
-    public String webTitle;
+    private String webUrl;
 
     @Column
-    public String productName;
-    @Column
-    public String productType;
+    private String webTitle;
 
     @Column
-    public OffsetDateTime createdAt;
+    private String productName;
+
     @Column
-    public OffsetDateTime updatedAt;
+    private String productType;
 
-    public ProductWeb() {
+    @Column
+    private OffsetDateTime createdAt;
 
-    }
+    @Column
+    private OffsetDateTime updatedAt;
 
     public ProductWeb(String webUrl, String webTitle, String productName, String productType) {
         this.webUrl = webUrl;
@@ -42,59 +48,4 @@ public class ProductWeb {
         this.createdAt = OffsetDateTime.now();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getWebUrl() {
-        return webUrl;
-    }
-
-    public void setWebUrl(String webUrl) {
-        this.webUrl = webUrl;
-    }
-
-    public String getWebTitle() {
-        return webTitle;
-    }
-
-    public void setWebTitle(String webTitle) {
-        this.webTitle = webTitle;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductType() {
-        return productType;
-    }
-
-    public void setProductType(String productType) {
-        this.productType = productType;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 }

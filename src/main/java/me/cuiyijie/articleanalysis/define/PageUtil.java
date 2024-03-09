@@ -1,5 +1,7 @@
 package me.cuiyijie.articleanalysis.define;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -10,55 +12,22 @@ import java.util.List;
  */
 public class PageUtil {
 
-    public static PageResp convertFromPage(Page page) {
-        return new PageResp(page.getTotalElements(),page.getPageable().getPageNumber(),page.getPageable().getPageSize(), page.getContent());
+    public static <T> PageResp<T> convertFromPage(Page<T> page) {
+        return new PageResp<>(page.getTotalElements(),
+                page.getPageable().getPageNumber(),
+                page.getPageable().getPageSize(),
+                page.getContent());
     }
 
+    @Data
+    @AllArgsConstructor
     public static class PageResp<T> {
 
         public Long total;
         public Integer current;
         public Integer pageSize;
+
         public List<T> data;
 
-
-        public PageResp(Long total, Integer current, Integer pageSize, List<T> data) {
-            this.total = total;
-            this.current = current;
-            this.pageSize = pageSize;
-            this.data = data;
-        }
-
-        public Long getTotal() {
-            return total;
-        }
-
-        public void setTotal(Long total) {
-            this.total = total;
-        }
-
-        public Integer getCurrent() {
-            return current;
-        }
-
-        public void setCurrent(Integer current) {
-            this.current = current;
-        }
-
-        public Integer getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(Integer pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public List<T> getData() {
-            return data;
-        }
-
-        public void setData(List<T> data) {
-            this.data = data;
-        }
     }
 }

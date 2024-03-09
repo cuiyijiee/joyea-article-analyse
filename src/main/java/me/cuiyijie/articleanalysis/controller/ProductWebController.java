@@ -36,7 +36,7 @@ public class ProductWebController {
 
     @ResponseBody
     @PostMapping("api/productWeb/create")
-    public CommonResp create(@RequestBody ReqSaveOrUpdateProductWeb req) {
+    public CommonResp<ProductWeb> create(@RequestBody ReqSaveOrUpdateProductWeb req) {
         ProductWeb productWeb = new ProductWeb(
                 req.getWebUrl(),
                 req.getWebTitle(),
@@ -82,18 +82,4 @@ public class ProductWebController {
         model.addAttribute("articleUrl", webUrl);
         return "read";
     }
-
-//    @RequestMapping("preview")
-//    public String preview(@RequestParam(defaultValue = "0") Long webId) throws UnsupportedEncodingException {
-//        Optional<ProductWeb> productWebOptional = productWebService.findById(webId);
-//        if (productWebOptional.isPresent()) {
-//            return String.format(
-//                    "redirect:https://open.weixin.qq.com/connect/oauth2/authorize?appid=%s&redirect_uri=https://scan.joyea.cn/api/wechat/redirect&response_type=code&scope=snsapi_userinfo&state=%s#wechat_redirect",
-//                    Constants.WeChatAppId,
-//                    webId
-//            );
-//        } else {
-//            return String.format("redirect:/customError?error=%s", URLEncoder.encode("文章不可用!", "UTF-8"));
-//        }
-//    }
 }
